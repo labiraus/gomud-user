@@ -31,7 +31,7 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}()
 
-	var request = api.UserRequest{}
+	var request = userRequest{}
 	err := api.UnmarshalRequest(&request, r)
 	if err != nil {
 		log.Println(err)
@@ -39,7 +39,25 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("user handler got %#v\n", request)
 
-	response := api.UserResponse{Greeting: "from " + request.UserName}
+	response := userResponse{Greeting: "from " + request.UserName}
 	fmt.Printf("user handler sending %#v\n", response)
 	api.MarshalResponse(response, w)
+}
+
+type userRequest struct {
+	UserName string
+}
+
+type userResponse struct {
+	Greeting string
+}
+
+// Validate checks if it is a valid request
+func (r userRequest) Validate() error {
+	return nil
+}
+
+// Validate checks if it is a valid request
+func (r userResponse) Validate() error {
+	return nil
 }
