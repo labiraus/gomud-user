@@ -19,7 +19,7 @@ func main() {
 	signal.Notify(c, os.Interrupt)
 	s := <-c
 	ctxDone()
-	fmt.Println("hello got signal: " + s.String() + " now closing")
+	fmt.Println("user got signal: " + s.String() + " now closing")
 	<-done
 }
 
