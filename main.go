@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -12,14 +11,14 @@ import (
 )
 
 func main() {
-	fmt.Println("user starting")
+	log.Println("user starting")
 	ctx, ctxDone := context.WithCancel(context.Background())
 	done := api.StartBasicApi(ctx, userHandler)
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 	s := <-c
 	ctxDone()
-	fmt.Println("user got signal: " + s.String() + " now closing")
+	log.Println("user got signal: " + s.String() + " now closing")
 	<-done
 }
 
@@ -37,10 +36,10 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		return
 	}
-	fmt.Printf("user handler got %#v\n", request)
+	log.Printf("user handler got %#v\n", request)
 
 	response := userResponse{Greeting: "from " + request.UserName}
-	fmt.Printf("user handler sending %#v\n", response)
+	log.Printf("user handler sending %#v\n", response)
 	api.MarshalResponse(response, w)
 }
 
