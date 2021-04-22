@@ -38,9 +38,13 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("user handler got %#v\n", request)
 
-	response := userResponse{Greeting: "from " + request.UserName}
+	response := setGreeting(request)
 	log.Printf("user handler sending %#v\n", response)
 	api.MarshalResponse(response, w)
+}
+
+func setGreeting(request userRequest) userResponse {
+	return userResponse{Greeting: "from " + request.UserName}
 }
 
 type userRequest struct {
