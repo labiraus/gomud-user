@@ -5,15 +5,15 @@ option go_package = "github.com/labiraus/gomud-user/api/unexported";
 // The greeting service definition.
 service Greeter {
   // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc Greet (GreetingRequest) returns (GreetingReply) {}
 }
 
 // The request message containing the user's name.
-message HelloRequest {
+message GreetingRequest {
   string name = 1;
 }
 
 // The response message containing the greetings
-message HelloReply {
+message GreetingReply {
   string message = 1;
 }
