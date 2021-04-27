@@ -19,9 +19,9 @@ type server struct {
 }
 
 // SayHello implements helloworld.GreeterServer
-func (s *server) SayHello(ctx context.Context, request *pb.HelloRequest) (*pb.HelloReply, error) {
+func (s *server) Greet(ctx context.Context, request *pb.GreetingRequest) (*pb.GreetingReply, error) {
 	log.Printf("Received: %v", request.GetName())
-	return &pb.HelloReply{Message: "from " + request.GetName()}, nil
+	return &pb.GreetingReply{Message: "from " + request.GetName()}, nil
 }
 
 func Start(ctx context.Context) <-chan struct{} {

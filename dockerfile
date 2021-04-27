@@ -23,7 +23,7 @@ RUN adduser \
     --uid "${UID}" \
     "${USER}"
 
-WORKDIR $GOPATH/src/app/
+WORKDIR $GOPATH/src/github.com/labiraus/gomud-user/
 
 # Add protobuf compile tool
 RUN apk add protobuf
@@ -36,20 +36,21 @@ RUN go get \
 
 RUN export PATH="$PATH:$(go env GOPATH)/bin"
 
-# Pre populate with go modules installed
+# Caching go modules installed as they don't often change
 COPY go.mod .
 COPY go.sum .
-COPY ./api/go.mod /api/
-COPY ./api/go.sum /api/
+COPY api/go.mod api/go.mod
+COPY api/go.sum api/go.sum
 ENV GO111MODULE=on
 RUN go mod download
 RUN go mod verify
 
+# Regenerate protobuf files
+COPY api/. api/.
+RUN protoc -I=api --go_out=api --go_opt=paths=source_relative --go-grpc_out=api --go-grpc_opt=paths=source_relative api/*/*.proto
+
 # Copy source code from local directories
 COPY . .
-
-# Ensure that the proto files are up to date
-RUN protoc -I=api --go_out=api --go_opt=paths=source_relative --go-grpc_out=api --go-grpc_opt=paths=source_relative api/*/*.proto
 
 # Run unit tests before building
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go test . ./...
