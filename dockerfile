@@ -49,7 +49,7 @@ RUN go mod verify
 COPY . .
 
 # Ensure that the proto files are up to date
-RUN protoc -I=api --go_out=api --go_opt=paths=source_relative --go-grpc_out=api --go-grpc_opt=paths=source_relative api/*/*/*.proto
+RUN protoc -I=api --go_out=api --go_opt=paths=source_relative --go-grpc_out=api --go-grpc_opt=paths=source_relative api/*/*.proto
 
 # Run unit tests before building
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go test . ./...
