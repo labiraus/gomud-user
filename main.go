@@ -5,12 +5,14 @@ import (
 	"log"
 	"os"
 	"os/signal"
+
+	"github.com/labiraus/gomud-user/pkg/greeting"
 )
 
 func main() {
 	log.Println("user starting")
 	ctx, ctxDone := context.WithCancel(context.Background())
-	done := Start(ctx)
+	done := greeting.Start(ctx)
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 	s := <-c
