@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/labiraus/gomud-user/api/unexported"
+	pb "github.com/labiraus/gomud-common/proto/gomud-user"
 	"google.golang.org/grpc"
 )
 

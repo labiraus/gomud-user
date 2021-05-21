@@ -9,6 +9,8 @@ import (
 	"github.com/labiraus/gomud-user/pkg/greeting"
 )
 
+//go:generate make generate
+
 func main() {
 	log.Println("user starting")
 	ctx, ctxDone := context.WithCancel(context.Background())

@@ -23,7 +23,7 @@ RUN adduser \
     --uid "${UID}" \
     "${USER}"
 
-WORKDIR $GOPATH/src/github.com/labiraus/gomud-user/
+WORKDIR $GOPATH/src/app/
 
 # Add protobuf compile tool
 RUN apk add protobuf
